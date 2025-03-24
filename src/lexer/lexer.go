@@ -3,8 +3,8 @@ package lexer
 import "monkey/token"
 
 type Lexer struct {
-	input        string // Treats the entire code as a single string
-	position     int    // Current position in inpout (points to current char)
+	input        string // Treats the entire code as a single string. Using bufio, can determine line numbers and such
+	position     int    // Current position in input (points to current char)
 	readPosition int    // Current reading position in input (after current char)
 	ch           byte   // Current char under examination. This only allows for ASCII characters.
 }
@@ -20,10 +20,10 @@ func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
 		l.ch = 0 // ASCII Code for the "NUL" character
 	} else {
-		l.ch = l.input[l.readPosition] // Set the current lexer char to the position
+		l.ch = l.input[l.readPosition] // Set the current lexer char to the next position (readPosition)
 	}
 
-	l.position = l.readPosition // Ensures position follows readPosition
+	l.position = l.readPosition // Ensures position always follows readPosition
 	l.readPosition += 1
 }
 
@@ -33,7 +33,7 @@ func (l *Lexer) NextToken() token.Token {
 	l.skipWhitespace()
 
 	switch l.ch {
-	case '=':
+	case '=': // If more two-char types come about, abstract this functionality.
 		if l.peekChar() == '=' {
 			ch := l.ch
 			l.readChar()

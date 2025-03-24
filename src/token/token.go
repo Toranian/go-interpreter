@@ -3,8 +3,8 @@ package token
 type TokenType string
 
 type Token struct {
-	Type    TokenType
-	Literal string
+	Type    TokenType // The allowed value (ex, variable)
+	Literal string    // What's actually represented (ex, variable name)
 }
 
 const (
@@ -63,5 +63,5 @@ func LookupIdent(ident string) TokenType {
 		return tok
 	}
 
-	return IDENT // User defined identifiers. Ex: Variables, function names, etc.
+	return IDENT // User defined identifiers. Ex: Variable names, function names, etc.
 }
