@@ -3,7 +3,7 @@ package token
 type TokenType string
 
 type Token struct {
-	Type    TokenType // The allowed value (ex, variable)
+	Type    TokenType // The type of value (ex, variable)
 	Literal string    // What's actually represented (ex, variable name)
 }
 
@@ -23,6 +23,7 @@ const (
 	ASTERISK = "*"
 	SLASH    = "/"
 
+	// Comparisons
 	LT     = "<"
 	GT     = ">"
 	EQ     = "=="

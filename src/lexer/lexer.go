@@ -15,18 +15,20 @@ func New(input string) *Lexer {
 	return l
 }
 
-func (l *Lexer) readChar() {
+func (l *Lexer) readChar() { // Private method
 	// We've reached the end of the file (presumably)
 	if l.readPosition >= len(l.input) {
-		l.ch = 0 // ASCII Code for the "NUL" character
+		l.ch = 0 // ASCII Code for the "NULL" character
 	} else {
 		l.ch = l.input[l.readPosition] // Set the current lexer char to the next position (readPosition)
 	}
 
-	l.position = l.readPosition // Ensures position always follows readPosition
+	// Ensures position always follows readPosition
+	l.position = l.readPosition
 	l.readPosition += 1
 }
 
+// Iterate over the text and determine the tokens. Skip whitespace.
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
@@ -50,8 +52,9 @@ func (l *Lexer) NextToken() token.Token {
 			ch := l.ch
 			l.readChar()
 			tok = token.Token{Type: token.NOT_EQ, Literal: string(ch) + string(l.ch)}
+		} else {
+			tok = newToken(token.BANG, l.ch)
 		}
-		tok = newToken(token.BANG, l.ch)
 	case '/':
 		tok = newToken(token.SLASH, l.ch)
 	case '*':
